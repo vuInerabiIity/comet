@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comet Services</title>
+    <title>Maintenance - Comet Services</title>
     <link rel="icon" href="comet.png" type="image/png">
     <style>
         * {
@@ -57,6 +57,11 @@
             position: relative;
             min-height: 100vh;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
         }
 
         .container::before {
@@ -68,14 +73,6 @@
             animation: vignette-pulse 12s infinite alternate;
             z-index: 2;
             pointer-events: none;
-        }
-
-        .container::after {
-            display: none;
-        }
-
-        .container::after {
-            display: none;
         }
 
         .stars {
@@ -92,629 +89,147 @@
             animation: twinkle 3s infinite alternate;
         }
 
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            background: rgba(8, 8, 12, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(40, 40, 50, 0.3);
-            padding: 16px 0;
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 24px;
-        }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .logo img {
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: #ffffff;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.6);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            padding: 120px 24px 80px;
-            text-align: center;
-            position: relative;
+            margin-bottom: 48px;
             z-index: 10;
-        }
-
-        .hero-title {
-            font-size: 64px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: 4px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            position: relative;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease forwards;
         }
 
-        .hero-subtitle {
-            font-size: 24px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 16px;
-            letter-spacing: 2px;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease 0.3s forwards;
+        .logo img {
+            width: 48px;
+            height: 48px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
         }
 
-        .hero-description {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.5);
+        .logo-text {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .maintenance-container {
+            text-align: center;
             max-width: 600px;
-            margin: 0 auto 48px;
-            line-height: 1.6;
+            width: 100%;
+            z-index: 10;
+            position: relative;
+        }
+
+        .maintenance-subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease 0.6s forwards;
+            color: #64b4ff;
         }
 
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin-bottom: 64px;
-            flex-wrap: wrap;
+        .maintenance-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+            line-height: 1.6;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease 0.9s forwards;
         }
 
-        .stat-item {
-            text-align: center;
-            padding: 24px;
-            background: rgba(8, 8, 12, 0.6);
-            border-radius: 12px;
-            border: 1px solid rgba(40, 40, 50, 0.4);
-            backdrop-filter: blur(10px);
-            min-width: 200px;
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(100, 100, 120, 0.6);
-        }
-
-        .stat-number {
-            font-size: 36px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .services {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 24px 120px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .service-selector {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .dropdown-container {
-            position: relative;
-            margin-bottom: 32px;
-        }
-
-        .dropdown-btn {
-            width: 100%;
+        .maintenance-card {
             background: rgba(8, 8, 12, 0.8);
-            border: 2px solid rgba(60, 60, 70, 0.4);
-            color: #ffffff;
-            padding: 24px 32px;
-            font-size: 18px;
-            font-weight: 500;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: left;
-        }
-
-        .dropdown-btn:hover {
-            border-color: rgba(100, 100, 120, 0.6);
-            background: rgba(12, 12, 18, 0.9);
-            transform: translateY(-2px);
-        }
-
-        .dropdown-arrow {
-            transition: transform 0.3s ease;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .dropdown-arrow.rotated {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: rgba(5, 5, 8, 0.95);
             border: 1px solid rgba(40, 40, 50, 0.6);
-            border-radius: 16px;
+            border-radius: 20px;
+            padding: 32px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            margin-top: 8px;
-        }
-
-        .dropdown-menu.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            padding: 20px 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(40, 40, 50, 0.3);
-        }
-
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-item:hover:not(.disabled) {
-            background: rgba(20, 20, 25, 0.8);
-        }
-
-        .dropdown-item.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .dropdown-item.disabled:hover {
-            background: transparent;
-        }
-
-        .service-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .service-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .service-price-small {
-            font-size: 14px;
-            font-weight: 700;
-            color: #4ade80;
-            background: rgba(74, 222, 128, 0.1);
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-        }
-
-        .dropdown-item.disabled .service-price-small {
-            color: rgba(255, 255, 255, 0.4);
-            background: rgba(100, 100, 100, 0.1);
-            border-color: rgba(100, 100, 100, 0.2);
-        }
-
-        .service-desc {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.4;
-        }
-
-        .service-content {
-            animation: slideIn 0.5s ease;
-        }
-
-        .section-title {
-            font-size: 48px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 16px;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 32px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease 1.2s forwards;
         }
 
-        .section-subtitle {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.5);
-            text-align: center;
-            margin-bottom: 64px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease 1.4s forwards;
-        }
-
-        .service-card {
-            background: rgba(8, 8, 12, 0.8);
-            border: 1px solid rgba(40, 40, 50, 0.6);
-            border-radius: 20px;
-            padding: 48px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            margin-bottom: 32px;
-            transition: all 0.4s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease 1.6s forwards;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(100, 100, 120, 0.8);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-        }
-
-        .service-header {
-            display: flex;
-            justify-content: space-between;
+        .status-indicator {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .service-title {
-            font-size: 32px;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 2px;
-        }
-
-        .service-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: #4ade80;
-            background: rgba(74, 222, 128, 0.1);
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-        }
-
-        .service-description {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .account-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .accounts-in-stock {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .stock-count {
-            font-weight: 700;
-            color: #4ade80;
-            font-size: 20px;
-        }
-
-        .generate-btn {
-            background: rgba(20, 20, 25, 0.8);
-            border: 2px solid rgba(60, 60, 70, 0.4);
-            color: #ffffff;
-            padding: 20px 40px;
-            font-size: 18px;
-            font-weight: 600;
+            gap: 12px;
+            background: rgba(3, 3, 6, 0.8);
+            padding: 16px 24px;
             border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            border: 1px solid rgba(50, 50, 60, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #64b4ff;
+            animation: pulse 2s infinite;
+        }
+
+        .status-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: rgba(20, 20, 25, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 32px 0;
+            border: 1px solid rgba(60, 60, 70, 0.3);
+        }
+
+        .progress-bar {
+            height: 20px;
+            width: 65%; 
+            background: linear-gradient(90deg, #64b4ff, #6c5ce7);
+            border-radius: 10px;
+            transition: width 0.5s ease;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            width: 100%;
-            max-width: 300px;
         }
 
-        .generate-btn::before {
+        .progress-bar::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: left 0.5s;
-        }
-
-        .generate-btn:hover::before {
-            left: 100%;
-        }
-
-        .generate-btn:hover {
-            border-color: rgba(100, 100, 120, 0.6);
-            background: rgba(25, 25, 30, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .generate-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-            transform: none;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 22px;
-            height: 22px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 1s linear infinite;
-            margin-right: 12px;
-        }
-
-        .verification-modal {
-            position: fixed;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            z-index: 1;
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+            border-radius: 10px;
         }
 
-        .verification-content {
-            background: rgba(8, 8, 12, 0.95);
-            border: 1px solid rgba(40, 40, 50, 0.6);
-            border-radius: 20px;
-            padding: 48px;
-            width: 480px;
-            max-width: 92vw;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            text-align: center;
-        }
-
-        .captcha-question {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 18px;
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        .captcha-input {
-            width: 120px;
-            padding: 16px 20px;
-            background: rgba(10, 10, 15, 0.8);
-            border: 2px solid rgba(60, 60, 70, 0.4);
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 20px;
-            text-align: center;
-            margin: 0 12px 24px;
-            font-weight: 500;
-        }
-
-        .captcha-input:focus {
-            outline: none;
-            border-color: rgba(100, 100, 120, 0.6);
-            box-shadow: 0 0 0 3px rgba(100, 100, 120, 0.1);
-        }
-
-        .verify-btn {
-            background: rgba(15, 15, 20, 0.8);
-            border: 2px solid rgba(60, 60, 70, 0.4);
-            color: #ffffff;
-            padding: 16px 32px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            margin-right: 12px;
-        }
-
-        .verify-btn:hover {
-            border-color: rgba(100, 100, 120, 0.6);
-            background: rgba(20, 20, 25, 0.9);
-        }
-
-        .cancel-btn {
-            background: transparent;
-            border: 2px solid rgba(100, 100, 100, 0.4);
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
             color: rgba(255, 255, 255, 0.7);
-            padding: 16px 32px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .cancel-btn:hover {
-            border-color: rgba(150, 150, 150, 0.6);
-            color: #ffffff;
-        }
-
-        .error-message {
-            color: #ff6b6b;
             font-size: 14px;
-            margin-top: 16px;
-        }
-
-        .account-details {
-            background: rgba(3, 3, 6, 0.8);
-            border-radius: 16px;
-            border: 1px solid rgba(40, 40, 50, 0.5);
-            padding: 32px;
-            margin-top: 32px;
-            display: none;
-            animation: slideIn 0.5s ease;
-        }
-
-        .account-title {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 18px;
-            margin-bottom: 24px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
-
-        .account-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-
-        .info-group {
-            background: rgba(8, 8, 12, 0.8);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(50, 50, 60, 0.3);
-        }
-
-        .info-label {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .info-value {
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-            word-break: break-all;
-        }
-
-        .credentials-group {
-            grid-column: 1 / -1;
-            background: rgba(5, 5, 8, 0.9);
-            border: 1px solid rgba(60, 60, 70, 0.4);
-        }
-
-        .copy-btn {
-            background: rgba(12, 12, 18, 0.8);
-            border: 2px solid rgba(50, 50, 60, 0.4);
-            color: #ffffff;
-            padding: 12px 24px;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-            width: 100%;
-            margin-top: 16px;
-        }
-
-        .copy-btn:hover {
-            background: rgba(18, 18, 25, 0.9);
-            border-color: rgba(80, 80, 95, 0.6);
-        }
-
-        .rate-limit-message {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-            color: #ff6b6b;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 16px;
-            text-align: center;
-            display: none;
         }
 
         @keyframes subtle-shift {
@@ -737,8 +252,9 @@
             100% { opacity: 1; }
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         @keyframes fadeInUp {
@@ -748,14 +264,9 @@
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
         }
 
         .star:nth-child(1) { top: 20%; left: 10%; width: 2px; height: 2px; animation-delay: 0s; }
@@ -768,31 +279,8 @@
         .star:nth-child(8) { top: 40%; left: 90%; width: 1px; height: 1px; animation-delay: 1.8s; }
 
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 48px;
-                letter-spacing: 2px;
-            }
-
-            .stats-container {
-                gap: 24px;
-            }
-
-            .stat-item {
-                min-width: 150px;
-            }
-
-            .service-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .account-status {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .nav-links {
-                display: none;
+            .maintenance-subtitle {
+                font-size: 24px;
             }
         }
     </style>
@@ -810,469 +298,51 @@
         <div class="star"></div>
     </div>
 
-    <nav class="nav">
-        <div class="nav-content">
-            <div class="logo">
-                <img src="comet.png" alt="Comet">
-                <div class="logo-text">COMET</div>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link" onclick="return true;">Home</a>
-                <a href="./list.html" class="nav-link" onclick="return true;">List Of Accounts</a>
-                <a href="./stats.html" class="nav-link" onclick="return true;">Statistics</a>
-            </div>
-        </div>
-    </nav>
+    <div class="logo">
+        <img src="comet.png" alt="Comet">
+        <div class="logo-text">COMET SERVICES</div>
+    </div>
 
-    <section class="hero">
-        <h1 class="hero-title">COMET SERVICES</h1>
-        <div class="hero-subtitle">Premium Account Service For Roblox</div>
-        <p class="hero-description">
-            Witness the BEST free Roblox account generator for games.
-            Examples are: Train Your Gubby, with accounts up to $1QT IG Value
-            Your Service, For Free.
+    <div class="maintenance-container">
+        <h2 class="maintenance-subtitle">System Upgrade in Progress</h2>
+        <p class="maintenance-description">
+            We're performing scheduled maintenance to improve your experience. 
+            Our services will be back online shortly.
         </p>
 
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number" id="accountsServed">0</div>
-                <div class="stat-label">Accounts Served</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="accountsInStock">0</div>
-                <div class="stat-label">Accounts In Stock</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="responseTime">< 2s</div>
-                <div class="stat-label">Response Time</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="services" id="services">
-        <h2 class="section-title">Our Services</h2>
-        <p class="section-subtitle">Select your service from the dropdown below</p>
-
-        <div class="service-selector">
-            <div class="dropdown-container">
-                <button class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()">
-                    <span id="selectedService">Choose a Service</span>
-                    <svg class="dropdown-arrow" id="dropdownArrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <div class="dropdown-item" onclick="selectService('gubby')">
-                        <div class="service-info">
-                            <div class="service-name">Train Your Gubby Accounts</div>
-                            <div class="service-price-small">FREE</div>
-                        </div>
-                        <div class="service-desc">Premium trained accounts with enhanced stats</div>
-                    </div>
-                    <div class="dropdown-item disabled">
-                        <div class="service-info">
-                            <div class="service-name">Premium Boost Service</div>
-                            <div class="service-price-small">Coming Soon</div>
-                        </div>
-                        <div class="service-desc">Advanced account boosting (Available Soon)</div>
-                    </div>
-                    <div class="dropdown-item disabled">
-                        <div class="service-info">
-                            <div class="service-name">Custom Training</div>
-                            <div class="service-price-small">Coming Soon</div>
-                        </div>
-                        <div class="service-desc">Personalized account optimization (Available Soon)</div>
-                    </div>
-                </div>
+        <div class="maintenance-card">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span class="status-text">Maintenance Mode</span>
             </div>
 
-            <div class="service-content" id="serviceContent" style="display: none;">
-                <div class="service-card">
-                    <div class="service-header">
-                        <h3 class="service-title" id="serviceTitle">Train Your Gubby Accounts</h3>
-                        <div class="service-price" id="servicePriceDisplay">FREE</div>
-                    </div>
+            <p style="color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px;">
+                We're currently upgrading our systems with new features and performance improvements. 
+                Thank you for your patience during this process.
+            </p>
 
-                    <p class="service-description" id="serviceDescription">
-                        Get access to premium trained Gubby accounts with enhanced stats and capabilities.
-                        Each account comes fully configured and ready to use with optimized settings for maximum performance.
-                    </p>
-
-                    <div class="account-status">
-                        <div class="accounts-in-stock">
-                            Accounts in stock: <span class="stock-count" id="stockCount">0</span>
-                        </div>
-                        <button class="generate-btn" id="generateAccountBtn" onclick="showVerification()">
-                            Generate Account
-                        </button>
-                    </div>
-
-                    <div class="rate-limit-message" id="rateLimitMessage"></div>
-
-                    <div class="account-details" id="accountDetails">
-                        <div class="account-title">Your Generated Account</div>
-                        <div class="account-info" id="accountInfo"></div>
-                    </div>
-                </div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
             </div>
-        </div>
-    </section>
 
-    <!-- Verification Modal -->
-    <div class="verification-modal" id="verificationModal">
-        <div class="verification-content">
-            <div class="captcha-question" id="captchaQuestion"></div>
-            <input type="text" class="captcha-input" id="captchaInput" placeholder="Answer">
-            <div>
-                <button class="verify-btn" onclick="verifyAnswer()">Verify</button>
-                <button class="cancel-btn" onclick="closeVerification()">Cancel</button>
+            <div class="progress-text">
+                <span>Progress</span>
+                <span>65% Complete</span>
             </div>
-            <div class="error-message" id="errorMessage"></div>
         </div>
     </div>
 </div>
 
 <script>
 
-    const API_BASE_URL = 'https://api.comet-services.workers.dev';
-
-    let captchaAnswer = 0;
-    let currentStock = 0;
-    let selectedServiceType = null;
-    let rateLimitTimer = null;
-    let rateLimitEndTime = null;
-
-    const services = {
-        gubby: {
-            title: "Train Your Gubby Accounts",
-            price: "FREE",
-            description: "Get access to premium trained Gubby accounts with enhanced stats and capabilities. Each account comes fully configured and ready to use with optimized settings for maximum performance.",
-            available: true
-        }
-    };
-
     document.addEventListener('DOMContentLoaded', function() {
-        loadStats();
-        setInterval(loadStats, 60000);
-    });
+        const progressBar = document.querySelector('.progress-bar');
 
-    async function loadStats() {
-        try {
-
-            const servedResponse = await fetch(`${API_BASE_URL}/served`);
-            if (servedResponse.ok) {
-                const servedCount = await servedResponse.text();
-                document.getElementById('accountsServed').textContent = parseInt(servedCount).toLocaleString();
-            }
-
-            const countResponse = await fetch(`${API_BASE_URL}/count`);
-            if (countResponse.ok) {
-                const stockCount = await countResponse.text();
-                currentStock = parseInt(stockCount);
-                document.getElementById('accountsInStock').textContent = currentStock.toLocaleString();
-                document.getElementById('stockCount').textContent = currentStock.toLocaleString();
-            }
-        } catch (error) {
-            console.error('Failed to load stats:', error);
-        }
-    }
-
-    function toggleDropdown() {
-        const menu = document.getElementById('dropdownMenu');
-        const arrow = document.getElementById('dropdownArrow');
-
-        menu.classList.toggle('show');
-        arrow.classList.toggle('rotated');
-    }
-
-    function selectService(serviceType) {
-        if (!services[serviceType]?.available) return;
-
-        selectedServiceType = serviceType;
-        const service = services[serviceType];
-
-        document.getElementById('selectedService').textContent = service.title;
-
-        document.getElementById('serviceTitle').textContent = service.title;
-        document.getElementById('servicePriceDisplay').textContent = service.price;
-        document.getElementById('serviceDescription').textContent = service.description;
-
-        document.getElementById('serviceContent').style.display = 'block';
-
-        document.getElementById('dropdownMenu').classList.remove('show');
-        document.getElementById('dropdownArrow').classList.remove('rotated');
-
-        document.getElementById('accountDetails').style.display = 'none';
-        document.getElementById('rateLimitMessage').style.display = 'none';
-    }
-
-    document.addEventListener('click', function(e) {
-        const dropdown = document.querySelector('.dropdown-container');
-        if (!dropdown.contains(e.target)) {
-            document.getElementById('dropdownMenu').classList.remove('show');
-            document.getElementById('dropdownArrow').classList.remove('rotated');
-        }
-    });
-
-    function generateCaptcha() {
-        const num1 = Math.floor(Math.random() * 15) + 5;
-        const num2 = Math.floor(Math.random() * 15) + 5;
-        const operators = ['+', '-', '×'];
-        const operator = operators[Math.floor(Math.random() * operators.length)];
-
-        let question, answer;
-        switch(operator) {
-            case '+':
-                question = `${num1} + ${num2}`;
-                answer = num1 + num2;
-                break;
-            case '-':
-                const larger = Math.max(num1, num2);
-                const smaller = Math.min(num1, num2);
-                question = `${larger} - ${smaller}`;
-                answer = larger - smaller;
-                break;
-            case '×':
-                const smallNum1 = Math.floor(Math.random() * 8) + 2;
-                const smallNum2 = Math.floor(Math.random() * 8) + 2;
-                question = `${smallNum1} × ${smallNum2}`;
-                answer = smallNum1 * smallNum2;
-                break;
-        }
-
-        captchaAnswer = answer;
-        document.getElementById('captchaQuestion').textContent = `Verify you're human: ${question} = ?`;
-    }
-
-    function showVerification() {
-        if (!selectedServiceType) {
-            alert('Please select a service first!');
-            return;
-        }
-
-        if (currentStock <= 0) {
-            alert('Sorry, no accounts currently in stock. Please check back later!');
-            return;
-        }
-
-        if (rateLimitEndTime && Date.now() < rateLimitEndTime) {
-            const remainingSeconds = Math.ceil((rateLimitEndTime - Date.now()) / 1000);
-            showRateLimitMessage(remainingSeconds);
-            return;
-        }
-
-        generateCaptcha();
-        document.getElementById('verificationModal').style.display = 'flex';
-        document.getElementById('captchaInput').focus();
-        document.getElementById('errorMessage').textContent = '';
-    }
-
-    function closeVerification() {
-        document.getElementById('verificationModal').style.display = 'none';
-        document.getElementById('captchaInput').value = '';
-    }
-
-    function verifyAnswer() {
-        const userAnswer = parseInt(document.getElementById('captchaInput').value);
-        const errorMessage = document.getElementById('errorMessage');
-
-        if (userAnswer === captchaAnswer) {
-            closeVerification();
-            generateAccount();
-        } else {
-            errorMessage.textContent = 'Incorrect answer. Please try again.';
-            document.getElementById('captchaInput').value = '';
-            generateCaptcha();
-        }
-    }
-
-    async function generateAccount() {
-        const btn = document.getElementById('generateAccountBtn');
-        const accountDetails = document.getElementById('accountDetails');
-
-        btn.disabled = true;
-        btn.innerHTML = '<span class="loading-spinner"></span>Generating Account...';
-
-        try {
-
-            const response = await fetch(`${API_BASE_URL}/random`);
-
-            if (response.status === 429) {
-
-                const errorData = await response.json();
-                const remainingTime = errorData.remainingTime || 300;
-
-                showRateLimitMessage(remainingTime);
-                rateLimitEndTime = Date.now() + (remainingTime * 1000);
-
-                if (rateLimitTimer) clearInterval(rateLimitTimer);
-                rateLimitTimer = setInterval(() => {
-                    const remainingSeconds = Math.ceil((rateLimitEndTime - Date.now()) / 1000);
-                    if (remainingSeconds <= 0) {
-                        clearInterval(rateLimitTimer);
-                        document.getElementById('rateLimitMessage').style.display = 'none';
-                    } else {
-                        showRateLimitMessage(remainingSeconds);
-                    }
-                }, 1000);
-
-                btn.disabled = false;
-                btn.innerHTML = 'Generate Account';
-                return;
-            }
-
-            if (!response.ok) {
-                throw new Error(`Failed to generate account: ${response.status}`);
-            }
-
-            const account = await response.json();
-
-            displayAccountDetails(account);
-
-            currentStock--;
-            document.getElementById('stockCount').textContent = currentStock.toLocaleString();
-            document.getElementById('accountsInStock').textContent = currentStock.toLocaleString();
-
-            const servedCount = parseInt(document.getElementById('accountsServed').textContent.replace(/,/g, '')) + 1;
-            document.getElementById('accountsServed').textContent = servedCount.toLocaleString();
-
-        } catch (error) {
-            console.error('Error generating account:', error);
-            alert('Failed to generate account. Please try again later.');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = 'Generate New Account';
-        }
-    }
-
-    function showRateLimitMessage(remainingSeconds) {
-        const messageElement = document.getElementById('rateLimitMessage');
-        const minutes = Math.floor(remainingSeconds / 60);
-        const seconds = remainingSeconds % 60;
-
-        messageElement.textContent = `Rate limited. Please wait ${minutes}:${seconds.toString().padStart(2, '0')} before requesting another account.`;
-        messageElement.style.display = 'block';
-    }
-
-    function displayAccountDetails(account) {
-        const accountInfo = document.getElementById('accountInfo');
-
-        let html = `
-            <div class="info-group credentials-group">
-                <div class="info-label">Login Credentials</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                    <div>
-                        <div class="info-label" style="margin-bottom: 4px; font-size: 10px;">Username</div>
-                        <div class="info-value" style="font-family: 'Fira Code', monospace;">${account.username}</div>
-                    </div>
-                    <div>
-                        <div class="info-label" style="margin-bottom: 4px; font-size: 10px;">Password</div>
-                        <div class="info-value" style="font-family: 'Fira Code', monospace;">${account.password}</div>
-                    </div>
-                </div>
-                <button class="copy-btn" onclick="copyCredentials('${account.username}', '${account.password}')">
-                    Copy Login Details
-                </button>
-            </div>
-        `;
-
-        for (const [key, value] of Object.entries(account)) {
-
-            if (key === 'username' || key === 'password') continue;
-
-            const displayKey = key
-                .replace(/_/g, ' ')
-                .replace(/\b\w/g, l => l.toUpperCase());
-
-            html += `
-                <div class="info-group">
-                    <div class="info-label">${displayKey}</div>
-                    <div class="info-value">${formatValue(value)}</div>
-                </div>
-            `;
-        }
-
-        accountInfo.innerHTML = html;
-        document.getElementById('accountDetails').style.display = 'block';
-    }
-
-    function formatValue(value) {
-        if (typeof value === 'boolean') {
-            return value ? 'Yes' : 'No';
-        }
-
-        if (typeof value === 'number') {
-
-            return value.toLocaleString();
-        }
-
-        if (typeof value === 'string' && value.includes(',')) {
-
-            return value.split(',').map(item => item.trim()).join(', ');
-        }
-
-        return value;
-    }
-
-    function copyCredentials(username, password) {
-        const credentials = `Username: ${username}\nPassword: ${password}`;
-        navigator.clipboard.writeText(credentials).then(() => {
-            const copyBtn = event.target;
-            const originalText = copyBtn.textContent;
-            copyBtn.textContent = 'Copied Successfully!';
-            copyBtn.style.borderColor = 'rgba(74, 222, 128, 0.6)';
-            copyBtn.style.color = '#4ade80';
-
-            setTimeout(() => {
-                copyBtn.textContent = originalText;
-                copyBtn.style.borderColor = 'rgba(50, 50, 60, 0.4)';
-                copyBtn.style.color = '#ffffff';
-            }, 3000);
-        }).catch(() => {
-
-            const textArea = document.createElement('textarea');
-            textArea.value = credentials;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-
-            const copyBtn = event.target;
-            const originalText = copyBtn.textContent;
-            copyBtn.textContent = 'Copied!';
-            setTimeout(() => {
-                copyBtn.textContent = originalText;
-            }, 2000);
-        });
-    }
-
-    document.getElementById('captchaInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            verifyAnswer();
-        }
-    });
-
-    document.getElementById('verificationModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeVerification();
-        }
-    });
-
-    setInterval(() => {
-        loadStats();
-    }, 30000);
-
-    document.getElementById('generateAccountBtn').addEventListener('mouseenter', function() {
-        this.style.boxShadow = '0 0 30px rgba(100, 100, 120, 0.3), 0 12px 30px rgba(0, 0, 0, 0.6)';
-    });
-
-    document.getElementById('generateAccountBtn').addEventListener('mouseleave', function() {
-        if (!this.disabled) {
-            this.style.boxShadow = '';
-        }
+        progressBar.style.width = '0';
+        setTimeout(() => {
+            progressBar.style.width = '65%';
+        }, 300);
     });
 </script>
 </body>
-
 </html>
